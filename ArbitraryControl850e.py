@@ -2,7 +2,8 @@ import numpy as np
 import csv
 import math
 
-#class that includes all the methods for measurement
+#serves to write a file that the Scribner 850e uses for measurement procedures
+
 class ArbitraryControl850e():
      def __init__(self, file_name):
         self.csvfile = open(file_name, 'w', newline='')
