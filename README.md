@@ -2,7 +2,7 @@
 
 This code was used for the publication _Sediva, E. et al. Journal of Power Sources 2023, 558, 232608._ to compute the Distribution of Relaxation Times (DRT) from Electrochemical Impedance Spectroscopy (EIS) data.
 
-The method of calculating the DRT are heavily inspired and based on the publications:  
+The methods for calculating the DRT are heavily inspired and based on the publications:  
 * Wan et al. Electrochemica Acta 2015, 184, 483-499,
 * Saccoccio et al. Electrochimica Acta 2014, 147, 470-482,
 * and the accompanying software:  
