@@ -1,10 +1,8 @@
 import numpy as np
 from scipy import integrate
-from scipy.signal import find_peaks, peak_widths
 import cvxpy as cp
 
 import matplotlib.pyplot as plt
-from mpl_point_clicker import clicker
 import matplotlib.ticker as mticker
 
 """
@@ -281,37 +279,4 @@ class DRT():
      def get_peaksHeightPosition(self,gamma_in):
           #find local max
           c = (np.diff(np.sign(np.diff(gamma_in))) < 0).nonzero()[0] + 1 # local max
-          print(f'peak freqs are {1./(2*np.pi*self.taus_fine[c])}')
-          print(f"peak heights are {gamma_in[c]}")
           return gamma_in[c], self.taus_fine[c]
-
-     def integrate_gammaPeaks(self,gamma):
-
-          peaks,_ = find_peaks(gamma)
-          ###
-          #it is not easy to automate the bounds of integration - implement clicking into a graph to get the coordinates
-          ###
-          fig,ax = plt.subplots()
-          logx_taus = np.log(self.taus_fine)
-          ax.plot(logx_taus,gamma)
-          ax.plot(logx_taus[peaks],gamma[peaks],'o')
-          ax.set_ylabel('Gamma / Ohm')
-          ax.set_xlabel('tau / s')
-
-          #clicker 
-          klicker = clicker(ax, ["event"], markers=["x"])
-          plt.show()
-          #coordinates needs to have the length of 2xpeaks
-          coordinates=klicker.get_positions()
-          coordinates = coordinates['event']
-          resistances = np.zeros((len(peaks),1))
-          for i in range(len(peaks)):
-               left_bound = coordinates[i*2][0]
-               right_bound = coordinates[i*2+1][0]
-
-               idx_left = (np.abs(logx_taus-left_bound)).argmin()
-               idx_right = (np.abs(logx_taus-right_bound)).argmin()
-               denom_int = 1+(4*np.pi**2)
-               resistances[i,0]=integrate.simps(gamma[idx_left:idx_right],x=logx_taus[idx_left:idx_right])
-          print(f'peak resistances are {resistances}')
-          return resistances
